@@ -1,0 +1,140 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Product = require('./models/Product');
+
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/inventory_management';
+
+const sampleProducts = [
+  {
+    name: 'Study Table',
+    sku: 'FURN-TB-812',
+    category: 'Furniture',
+    price: 3999,
+    quantity: 2,
+    reorderLevel: 4,
+    supplier: 'IKEA India'
+  },
+  {
+    name: 'Gel Pen Pack of 15',
+    sku: 'STNY-PN-713',
+    category: 'Stationery',
+    price: 120,
+    quantity: 40,
+    reorderLevel: 20,
+    supplier: 'Cello Pens'
+  },
+  {
+    name: 'Ergonomic Office Chair',
+    sku: 'FURN-CH-405',
+    category: 'Furniture',
+    price: 6499,
+    quantity: 5,
+    reorderLevel: 5,
+    supplier: 'Featherlite'
+  },
+  {
+    name: 'Wireless Bluetooth Mouse',
+    sku: 'ELEC-MS-101',
+    category: 'Electronics',
+    price: 799,
+    quantity: 35,
+    reorderLevel: 15,
+    supplier: 'Logitech'
+  },
+  {
+    name: 'USB-C Fast Charger 65W',
+    sku: 'ELEC-CH-202',
+    category: 'Electronics',
+    price: 1499,
+    quantity: 20,
+    reorderLevel: 10,
+    supplier: 'Anker'
+  },
+  {
+    name: 'Noise Cancelling Headphones',
+    sku: 'ELEC-HP-808',
+    category: 'Electronics',
+    price: 8999,
+    quantity: 12,
+    reorderLevel: 5,
+    supplier: 'Sony'
+  },
+  {
+    name: 'Smart LED Desk Lamp',
+    sku: 'ELEC-LP-909',
+    category: 'Electronics',
+    price: 1899,
+    quantity: 29,
+    reorderLevel: 10,
+    supplier: 'Xiaomi'
+  },
+  {
+    name: 'Cotton Crewneck T-Shirt',
+    sku: 'APPR-TS-301',
+    category: 'Apparel',
+    price: 599,
+    quantity: 50,
+    reorderLevel: 25,
+    supplier: 'H&M India'
+  },
+  {
+    name: 'Slim Fit Denim Jeans',
+    sku: 'APPR-JN-302',
+    category: 'Apparel',
+    price: 1999,
+    quantity: 28,
+    reorderLevel: 15,
+    supplier: 'Levi Strauss'
+  },
+  {
+    name: 'Ceramic Coffee Mug Set',
+    sku: 'KTCH-MG-501',
+    category: 'Kitchenware',
+    price: 699,
+    quantity: 8,
+    reorderLevel: 12,
+    supplier: 'Clay Craft'
+  },
+  {
+    name: 'Stainless Steel Water Bottle',
+    sku: 'KTCH-BT-502',
+    category: 'Kitchenware',
+    price: 450,
+    quantity: 3,
+    reorderLevel: 10,
+    supplier: 'Milton'
+  },
+  {
+    name: 'Hardcover Ruled Notebook',
+    sku: 'STNY-NB-714',
+    category: 'Stationery',
+    price: 250,
+    quantity: 60,
+    reorderLevel: 20,
+    supplier: 'Classmate'
+  }
+];
+
+async function seedDatabase() {
+  try {
+    console.log(`Connecting to MongoDB at ${MONGO_URI}...`);
+    await mongoose.connect(MONGO_URI);
+    console.log('Connected to MongoDB. Clearing existing products...');
+
+    await Product.deleteMany({});
+    console.log('Cleared existing product collection.');
+
+    const created = await Product.insertMany(sampleProducts);
+    console.log(`Successfully seeded ${created.length} sample products!`);
+
+    await mongoose.disconnect();
+    console.log('Database connection closed.');
+    process.exit(0);
+  } catch (error) {
+    console.error('Failed to seed database:', error.message);
+    console.error('Make sure local MongoDB is running at 127.0.0.1:27017');
+    process.exit(1);
+  }
+}
+
+seedDatabase();

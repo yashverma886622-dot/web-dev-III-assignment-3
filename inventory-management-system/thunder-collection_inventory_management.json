@@ -1,0 +1,180 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "Inventory and Data Management System",
+  "collectionId": "col-inventory-management-3",
+  "dateExported": "2026-10-26",
+  "version": "1.1",
+  "folders": [
+    {
+      "_id": "folder-core",
+      "name": "1. Core & Health",
+      "containerId": ""
+    },
+    {
+      "_id": "folder-crud",
+      "name": "2. Product CRUD",
+      "containerId": ""
+    },
+    {
+      "_id": "folder-query",
+      "name": "3. Filtering, Sorting & Pagination",
+      "containerId": ""
+    },
+    {
+      "_id": "folder-stock",
+      "name": "4. Stock Adjustments",
+      "containerId": ""
+    },
+    {
+      "_id": "folder-reports",
+      "name": "5. Reports & Aggregation",
+      "containerId": ""
+    }
+  ],
+  "requests": [
+    {
+      "_id": "req-root",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-core",
+      "name": "API Root Info",
+      "url": "http://localhost:3000/",
+      "method": "GET"
+    },
+    {
+      "_id": "req-health",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-core",
+      "name": "Server & DB Health",
+      "url": "http://localhost:3000/api/health",
+      "method": "GET"
+    },
+    {
+      "_id": "req-create-product",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-crud",
+      "name": "Create Product",
+      "url": "http://localhost:3000/api/products",
+      "method": "POST",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Gel Pen Pack of 15\",\n  \"sku\": \"STNY-PN-713\",\n  \"category\": \"Stationery\",\n  \"price\": 120,\n  \"quantity\": 40,\n  \"reorderLevel\": 20,\n  \"supplier\": \"Cello Pens\"\n}"
+      }
+    },
+    {
+      "_id": "req-get-all",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-crud",
+      "name": "Get All Products (Default)",
+      "url": "http://localhost:3000/api/products",
+      "method": "GET"
+    },
+    {
+      "_id": "req-get-single",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-crud",
+      "name": "Get Single Product by ID",
+      "url": "http://localhost:3000/api/products/REPLACE_WITH_PRODUCT_ID",
+      "method": "GET"
+    },
+    {
+      "_id": "req-update-product",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-crud",
+      "name": "Update Product Details",
+      "url": "http://localhost:3000/api/products/REPLACE_WITH_PRODUCT_ID",
+      "method": "PUT",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"price\": 140,\n  \"quantity\": 60\n}"
+      }
+    },
+    {
+      "_id": "req-delete-product",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-crud",
+      "name": "Delete Product",
+      "url": "http://localhost:3000/api/products/REPLACE_WITH_PRODUCT_ID",
+      "method": "DELETE"
+    },
+    {
+      "_id": "req-filter-category",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-query",
+      "name": "Filter by Category",
+      "url": "http://localhost:3000/api/products?category=Electronics",
+      "method": "GET"
+    },
+    {
+      "_id": "req-filter-price",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-query",
+      "name": "Filter by Price Range (1000 to 50000)",
+      "url": "http://localhost:3000/api/products?minPrice=1000&maxPrice=50000",
+      "method": "GET"
+    },
+    {
+      "_id": "req-sort-price-asc",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-query",
+      "name": "Sort by Price Ascending",
+      "url": "http://localhost:3000/api/products?sort=price",
+      "method": "GET"
+    },
+    {
+      "_id": "req-sort-price-desc",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-query",
+      "name": "Sort by Price Descending",
+      "url": "http://localhost:3000/api/products?sort=-price",
+      "method": "GET"
+    },
+    {
+      "_id": "req-paginate",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-query",
+      "name": "Pagination (page 1, limit 5)",
+      "url": "http://localhost:3000/api/products?page=1&limit=5",
+      "method": "GET"
+    },
+    {
+      "_id": "req-stock-restock",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-stock",
+      "name": "Stock Adjustment - Restock",
+      "url": "http://localhost:3000/api/products/REPLACE_WITH_PRODUCT_ID/stock",
+      "method": "PATCH",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"operation\": \"restock\",\n  \"quantity\": 10\n}"
+      }
+    },
+    {
+      "_id": "req-stock-sale",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-stock",
+      "name": "Stock Adjustment - Sale",
+      "url": "http://localhost:3000/api/products/REPLACE_WITH_PRODUCT_ID/stock",
+      "method": "PATCH",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"operation\": \"sale\",\n  \"quantity\": 2\n}"
+      }
+    },
+    {
+      "_id": "req-low-stock-report",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-reports",
+      "name": "Low-Stock Report (threshold 10)",
+      "url": "http://localhost:3000/api/products/reports/low-stock?threshold=10",
+      "method": "GET"
+    },
+    {
+      "_id": "req-category-summary",
+      "colId": "col-inventory-management-3",
+      "containerId": "folder-reports",
+      "name": "Category-Wise Summary (Aggregation)",
+      "url": "http://localhost:3000/api/products/reports/category-summary",
+      "method": "GET"
+    }
+  ]
+}
